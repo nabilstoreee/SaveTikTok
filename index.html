@@ -1774,7 +1774,7 @@
             const btnDownload = document.getElementById('btnDownload');
             const mainGlow = document.getElementById('mainGlow');
             const headerIcon = document.getElementById('headerIcon');
-            const comingSoon = document.getElementById('tab-instagram');
+            const comingSoon = document.getElementById('comingSoonOverlay');
 
             urlInput.value = '';
             clearError();
@@ -1819,7 +1819,7 @@
         function backToHome() {
             const inputSection = document.getElementById('inputSection');
             const resultSection = document.getElementById('resultSection');
-            const comingSoon = document.getElementById('tab-instagram');
+            const comingSoon = document.getElementById('comingSoonOverlay');
             const loading = document.getElementById('loading');
             const errorMsg = document.getElementById('errorMsg');
             const content = document.getElementById('content');
@@ -1844,7 +1844,7 @@
         }
 
         function showComingSoon() {
-            const comingSoon = document.getElementById('tab-instagram');
+            const comingSoon = document.getElementById('comingSoonOverlay');
             comingSoon.classList.remove('hidden');
         }
 
@@ -2190,7 +2190,7 @@ if (copyCaptionBtn) {
             
             // Setup event listeners
             document.getElementById('tab-tiktok').onclick = () => switchTab('tiktok');
-            document.getElementById('tab-instagram').onclick = () => switchTab('instagram');
+            document.getElementById('comingSoonOverlay').onclick = () => switchTab('instagram');
             document.getElementById('btnDownload').onclick = handleDownload;
             document.getElementById('backToHomeBtn').onclick = backToHome;
             document.getElementById('ratingToggleBtn').onclick = toggleRatingSection;
