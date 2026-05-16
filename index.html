@@ -2,11 +2,19 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="SaveTik - Download video TikTok tanpa watermark gratis dengan kualitas HD. Cepat, aman, dan tanpa login.">
     <meta name="keywords" content="SaveTik, download video tiktok, tiktok no watermark">
     <meta name="author" content="Nabil Assihidiqi">
     <title>SaveTik - Download Video TikTok No Watermark</title>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff0050">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SaveTik">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -74,6 +82,307 @@
             transform: translateY(-3px);
         }
 
+        /* Tombol Download Savetik */
+        .download-savetik-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            gap: 8px;
+            display: inline-flex;
+            align-items: center;
+            color: white;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .download-savetik-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px -5px rgba(16, 185, 129, 0.5);
+            color: white;
+        }
+
+        /* POPUP SAVETIK STYLES */
+        .savetik-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .savetik-popup-overlay.show {
+            opacity: 1;
+        }
+
+        .savetik-popup-overlay.hidden {
+            display: none;
+        }
+
+        .savetik-popup-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 32px;
+            width: 90%;
+            max-width: 380px;
+            padding: 28px 24px 32px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .savetik-popup-overlay.show .savetik-popup-card {
+            transform: scale(1);
+        }
+
+        .savetik-popup-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .savetik-popup-close:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            transform: rotate(90deg);
+        }
+
+        .savetik-popup-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff0050, #00f5ea);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 15px 35px -10px rgba(255, 0, 80, 0.4);
+        }
+
+        .savetik-popup-icon i {
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .savetik-popup-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-align: center;
+            color: white;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .savetik-popup-desc {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            text-align: center;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .savetik-popup-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            margin: 20px 0;
+        }
+
+        .savetik-popup-app-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+        }
+
+        .savetik-app-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #ff0050, #00f5ea);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .savetik-app-icon i {
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .savetik-app-details h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 2px;
+        }
+
+        .savetik-app-details p {
+            font-size: 0.7rem;
+            color: #6b7280;
+        }
+
+        .savetik-popup-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .savetik-btn-cancel {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 14px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #9ca3af;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .savetik-btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .savetik-btn-install {
+            flex: 1;
+            background: linear-gradient(135deg, #ff0050, #00f5ea);
+            border: none;
+            border-radius: 16px;
+            padding: 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .savetik-btn-install:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(255, 0, 80, 0.4);
+        }
+
+        /* Install Popup PWA Style (seperti di foto) */
+        .install-pwa-popup {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 24px;
+            padding: 16px 20px;
+            z-index: 1001;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transform: translateY(120%);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .install-pwa-popup.show {
+            transform: translateY(0);
+        }
+
+        .install-pwa-popup.hidden {
+            display: none;
+        }
+
+        .install-pwa-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .install-pwa-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #ff0050, #00f5ea);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .install-pwa-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .install-pwa-text h4 {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 2px;
+        }
+
+        .install-pwa-text p {
+            font-size: 0.7rem;
+            color: #9ca3af;
+        }
+
+        .install-pwa-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .install-pwa-buttons button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 14px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-install-now {
+            background: linear-gradient(135deg, #ff0050, #00f5ea);
+            border: none;
+            color: white;
+        }
+
+        .btn-install-later {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #9ca3af;
+        }
+
+        .btn-install-later:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
@@ -102,7 +411,7 @@
         }
         
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+            background: linear-gradient(to bottom, #ff0050, #00f5ea);
             border-radius: 10px;
         }
 
@@ -186,7 +495,6 @@
             z-index: 100;
         }
 
-        /* Video player styles */
         .video-container {
             position: relative;
             background: #000;
@@ -344,14 +652,14 @@
             width: 72px;
             height: 72px;
             border-radius: 22px;
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, #ff0050 0%, #00f5ea 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 14px;
             font-size: 1.8rem;
             color: white;
-            box-shadow: 0 8px 32px -8px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 8px 32px -8px rgba(255, 0, 80, 0.5);
             position: relative;
         }
         
@@ -361,7 +669,7 @@
             inset: -3px;
             border-radius: 25px;
             padding: 3px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            background: linear-gradient(135deg, #ff0050, #00f5ea);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -399,7 +707,7 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            color: #3b82f6;
+            color: #ff0050;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
@@ -410,7 +718,7 @@
             content: '';
             flex: 1;
             height: 1px;
-            background: linear-gradient(90deg, rgba(59,130,246,0.3), transparent);
+            background: linear-gradient(90deg, rgba(255,0,80,0.3), transparent);
         }
         
         .info-card {
@@ -426,7 +734,7 @@
         
         .info-card:hover {
             background: rgba(255,255,255,0.06);
-            border-color: rgba(59, 130, 246, 0.15);
+            border-color: rgba(255, 0, 80, 0.15);
             transform: translateX(4px);
         }
         
@@ -434,12 +742,12 @@
             width: 38px;
             height: 38px;
             border-radius: 12px;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.15);
+            background: rgba(255, 0, 80, 0.1);
+            border: 1px solid rgba(255, 0, 80, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #3b82f6;
+            color: #ff0050;
             font-size: 0.9rem;
             flex-shrink: 0;
         }
@@ -479,11 +787,11 @@
         }
         
         .info-social:hover {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            background: linear-gradient(135deg, #ff0050, #00f5ea);
             color: white;
             border-color: transparent;
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px -5px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 8px 20px -5px rgba(255, 0, 80, 0.4);
         }
         
         .info-tag {
@@ -491,12 +799,12 @@
             align-items: center;
             gap: 6px;
             padding: 5px 12px;
-            background: rgba(59, 130, 246, 0.08);
-            border: 1px solid rgba(59, 130, 246, 0.15);
+            background: rgba(255, 0, 80, 0.08);
+            border: 1px solid rgba(255, 0, 80, 0.15);
             border-radius: 10px;
             font-size: 0.7rem;
             font-weight: 600;
-            color: #60a5fa;
+            color: #ff6b6b;
             margin-right: 6px;
             margin-bottom: 6px;
         }
@@ -534,8 +842,8 @@
         }
 
         @keyframes infoPulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
-            50% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 80, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(255, 0, 80, 0); }
         }
         
         .info-trigger.pulse {
@@ -854,7 +1162,7 @@
             width: 36px;
             height: 36px;
             border-radius: 12px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            background: linear-gradient(135deg, #ff0050, #00f5ea);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1103,7 +1411,7 @@
     <div id="infoPanel" class="info-panel">
         <div class="info-panel-header">
             <div class="info-avatar">
-                <i class="fas fa-code"></i>
+                <i class="fas fa-download"></i>
             </div>
             <h3>Nabil Assihidiqi</h3>
             <p>Full-Stack Developer</p>
@@ -1390,8 +1698,66 @@
                 <a href="mailto:anakselatan34@gmail.com" aria-label="Email">
                     <i class="fas fa-envelope"></i>
                 </a>
+                <!-- TOMBOL DOWNLOAD SAVETIK -->
+                <a href="#" id="downloadSavetikBtn" class="download-savetik-btn" title="Download Aplikasi Savetik">
+                    <i class="fas fa-download"></i> Savetik
+                </a>
             </div>
         </footer>
+    </div>
+
+    <!-- POPUP INSTALL KE LAYAR BERANDA (PWA) seperti di foto -->
+    <div id="installPwaPopup" class="install-pwa-popup hidden">
+        <div class="install-pwa-header">
+            <div class="install-pwa-icon">
+                <i class="fas fa-download"></i>
+            </div>
+            <div class="install-pwa-text">
+                <h4>Tambahkan ke layar beranda</h4>
+                <p>Instal aplikasi SaveTik untuk akses lebih cepat</p>
+            </div>
+        </div>
+        <div class="install-pwa-buttons">
+            <button class="btn-install-later" id="installLaterBtn">Nanti</button>
+            <button class="btn-install-now" id="installNowBtn">Instal</button>
+        </div>
+    </div>
+
+    <!-- POPUP DOWNLOAD SAVETIK -->
+    <div id="savetikPopup" class="savetik-popup-overlay hidden">
+        <div class="savetik-popup-card">
+            <button class="savetik-popup-close" id="closeSavetikPopup">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="savetik-popup-icon">
+                <i class="fas fa-download"></i>
+            </div>
+            
+            <h2 class="savetik-popup-title">SaveTik</h2>
+            <p class="savetik-popup-desc">
+                Download video TikTok tanpa watermark, kualitas HD, cepat, dan gratis. Install aplikasi SaveTik untuk pengalaman terbaik!
+            </p>
+            
+            <div class="savetik-popup-divider"></div>
+            
+            <div class="savetik-popup-app-info">
+                <div class="savetik-app-icon">
+                    <i class="fab fa-tiktok"></i>
+                </div>
+                <div class="savetik-app-details">
+                    <h4>SaveTik Downloader</h4>
+                    <p>savetik.vercel.app</p>
+                </div>
+            </div>
+            
+            <div class="savetik-popup-buttons">
+                <button class="savetik-btn-cancel" id="cancelDownloadBtn">Batal</button>
+                <a href="#" id="confirmDownloadBtn" class="savetik-btn-install">
+                    <i class="fas fa-download"></i> Instal
+                </a>
+            </div>
+        </div>
     </div>
 
     <!-- Coming Soon Overlay -->
@@ -1421,6 +1787,10 @@
         
         const API_TIKTOK = 'https://www.tikwm.com/api/';
         const ADMIN_PASSWORD = 'nabil123'; // Ganti password ini!
+
+        // PWA Installation
+        let deferredPrompt;
+        let isPwaInstalled = false;
 
         // Demo reviews data
         const demoReviews = [
@@ -2177,6 +2547,85 @@ if (copyCaptionBtn) {
             }
         }
 
+        // ===== PWA INSTALL FUNCTIONS =====
+        function showInstallPopup() {
+            const popup = document.getElementById('installPwaPopup');
+            if (popup && !isPwaInstalled) {
+                popup.classList.remove('hidden');
+                setTimeout(() => {
+                    popup.classList.add('show');
+                }, 100);
+            }
+        }
+
+        function hideInstallPopup() {
+            const popup = document.getElementById('installPwaPopup');
+            popup.classList.remove('show');
+            setTimeout(() => {
+                popup.classList.add('hidden');
+            }, 300);
+        }
+
+        function triggerInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        isPwaInstalled = true;
+                        showToast('Aplikasi SaveTik berhasil diinstall! 🎉', 'success');
+                    }
+                    deferredPrompt = null;
+                    hideInstallPopup();
+                });
+            } else {
+                // Fallback: arahkan ke panduan install manual
+                showToast('Klik menu browser (3 titik) → Install Aplikasi', 'warning');
+                hideInstallPopup();
+            }
+        }
+
+        // ===== SAVETIK POPUP FUNCTIONS =====
+        const savetikPopup = document.getElementById('savetikPopup');
+        const closePopupBtn = document.getElementById('closeSavetikPopup');
+        const cancelBtn = document.getElementById('cancelDownloadBtn');
+        const confirmBtn = document.getElementById('manifest');
+        const downloadSavetikBtn = document.getElementById('downloadSavetikBtn');
+
+        function showSavetikPopup() {
+            savetikPopup.classList.remove('hidden');
+            setTimeout(() => {
+                savetikPopup.classList.add('show');
+            }, 10);
+        }
+
+        function hideSavetikPopup() {
+            savetikPopup.classList.remove('show');
+            setTimeout(() => {
+                savetikPopup.classList.add('hidden');
+            }, 300);
+        }
+
+        // Register Service Worker untuk PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker registered:', reg))
+                    .catch(err => console.log('Service Worker failed:', err));
+            });
+        }
+
+        // Deteksi event install PWA
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Tampilkan popup install setelah beberapa detik
+            setTimeout(() => {
+                if (!isPwaInstalled && !localStorage.getItem('pwa_installed')) {
+                    showInstallPopup();
+                }
+            }, 3000);
+        });
+
         // Initialize event listeners
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize reviews
@@ -2215,6 +2664,57 @@ if (copyCaptionBtn) {
             document.getElementById('adminPass').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') loginAdmin();
             });
+            
+            // Setup Savetik popup events
+            if (downloadSavetikBtn) {
+                downloadSavetikBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showSavetikPopup();
+                });
+            }
+
+            if (closePopupBtn) {
+                closePopupBtn.addEventListener('click', hideSavetikPopup);
+            }
+
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', hideSavetikPopup);
+            }
+
+            if (confirmBtn) {
+                confirmBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Ganti link download APK di sini dengan link asli Anda
+                    const downloadLink = 'https://example.com/download-savetik.apk';
+                    window.open(downloadLink, '_blank');
+                    showToast('Memulai download aplikasi Savetik', 'success');
+                    hideSavetikPopup();
+                });
+            }
+
+            // Tutup popup kalau klik overlay
+            if (savetikPopup) {
+                savetikPopup.addEventListener('click', (e) => {
+                    if (e.target === savetikPopup) {
+                        hideSavetikPopup();
+                    }
+                });
+            }
+
+            // Setup PWA install popup buttons
+            const installNowBtn = document.getElementById('installNowBtn');
+            const installLaterBtn = document.getElementById('installLaterBtn');
+
+            if (installNowBtn) {
+                installNowBtn.addEventListener('click', triggerInstall);
+            }
+
+            if (installLaterBtn) {
+                installLaterBtn.addEventListener('click', () => {
+                    localStorage.setItem('pwa_installed', 'later');
+                    hideInstallPopup();
+                });
+            }
         });
         
     </script>
