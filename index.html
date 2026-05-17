@@ -1093,14 +1093,14 @@
             font-weight: 700;
         }
         
-/* Tombol Download APK */
+/* Tombol Download APK - CSS ASLI + border & radius seperti SnapTik */
 .btn-download-apk {
     display: flex;
     align-items: center;
     gap: 14px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03); /* TETAP ASLI */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* border abu-abu tipis terang */
+    border-radius: 12px; /* bentuk seperti SnapTik (kotak membulat) */
     padding: 12px 16px;
     text-decoration: none;
     transition: all 0.3s ease;
@@ -1109,9 +1109,9 @@
 }
 
 .btn-download-apk:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 0, 80, 0.3);
-    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.06); /* TETAP ASLI */
+    border-color: rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px); /* TETAP ASLI */
 }
 
 .btn-download-apk .apk-logo {
@@ -1127,14 +1127,40 @@
 .btn-download-apk .apk-text {
     font-weight: 700;
     font-size: 15px;
-    color: white;
+    color: white; /* TETAP PUTIH */
     letter-spacing: 0.3px;
 }
 
 .btn-download-apk .apk-version {
     font-size: 10px;
-    color: #9ca3af;
+    color: #9ca3af; /* TETAP ASLI */
     font-weight: 500;
+}
+
+/* === IKON HEADER S BIRU === */
+#headerIcon {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    width: 75px;
+    height: 75px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+}
+
+#headerIcon svg {
+    display: none;
+}
+
+#headerIcon::before {
+    content: "S";
+    font-family: 'Inter', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
         
     </style>
@@ -1150,103 +1176,110 @@
     <div id="infoBackdrop" class="info-backdrop"></div>
 
     <!-- Info Panel -->
-    <div id="infoPanel" class="info-panel">
-        <div class="info-panel-header">
-            <div class="info-avatar">
-                <i class="fas fa-code"></i>
-            </div>
-            <h3>Nabil Assihidiqi</h3>
-            <p>Full-Stack Developer</p>
+<div id="infoPanel" class="info-panel">
+    <div class="info-panel-header">
+        <!-- LOGO S BIRU -->
+        <div style="width: 72px; height: 72px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 22px; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; box-shadow: 0 8px 32px -8px rgba(59, 130, 246, 0.5);">
+            <span style="font-family: 'Inter', sans-serif; font-size: 38px; font-weight: 800; color: white;">S</span>
         </div>
-        
-        <div class="info-panel-body">
-            <!-- About Website -->
-            <div class="info-section">
-                <div class="info-section-label">Tentang Website</div>
-                <div class="info-card">
-                    <div class="info-card-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <div class="info-card-content">
-                        <h4>SaveTik</h4>
-                        <p>Platform download video TikTok tanpa watermark dengan kualitas HD. Cepat, aman, dan tanpa login.</p>
-                    </div>
+        <h3>Nabil Assihidiqi</h3>
+        <p>Full-Stack Developer</p>
+    </div>
+    
+    <div class="info-panel-body">
+        <!-- About Website -->
+        <div class="info-section">
+            <div class="info-section-label">Tentang Website</div>
+            <div class="info-card">
+                <div class="info-card-icon">
+                    <i class="fas fa-bolt"></i>
                 </div>
-                <div style="margin-top: 8px; display: flex; flex-wrap: wrap;">
-                    <span class="info-tag"><i class="fas fa-check"></i> No Watermark</span>
-                    <span class="info-tag"><i class="fas fa-check"></i> HD Quality</span>
-                    <span class="info-tag"><i class="fas fa-check"></i> Gratis</span>
-                    <span class="info-tag"><i class="fas fa-check"></i> Aman</span>
+                <div class="info-card-content">
+                    <h4>SaveTik</h4>
+                    <p>Platform download video TikTok tanpa watermark dengan kualitas HD. Cepat, aman, dan tanpa login.</p>
                 </div>
             </div>
-            
-            <!-- Developer Info -->
-            <div class="info-section">
-                <div class="info-section-label">Developer</div>
-                <div class="info-card">
-                    <div class="info-card-icon">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="info-card-content">
-                        <h4>Nabil Assihidiqi</h4>
-                        <p>Pengembang web & mobile application. Fokus pada pengalaman pengguna yang modern dan intuitif.</p>
-                    </div>
-                </div>
-                <div class="info-socials" style="margin-top: 10px;">
-                    <a href="https://github.com/" target="_blank" class="info-social" title="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://t.me/NabilOfficialShopp" target="_blank" class="info-social" title="Telegram">
-                        <i class="fab fa-telegram"></i>
-                    </a>
-                    <a href="https://tiktok.com/@" target="_blank" class="info-social" title="TikTok">
-                        <i class="fab fa-tiktok"></i>
-                    </a>
-                    <a href="mailto:anakselatan34@gmail.com" class="info-social" title="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Tech Stack -->
-            <div class="info-section">
-                <div class="info-section-label">Teknologi</div>
-                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                    <span class="info-tag"><i class="fab fa-html5"></i> HTML5</span>
-                    <span class="info-tag"><i class="fab fa-css3-alt"></i> Tailwind CSS</span>
-                    <span class="info-tag"><i class="fab fa-js"></i> JavaScript</span>
-                    <span class="info-tag"><i class="fas fa-server"></i> API</span>
-                    
-<!-- Tombol Download APK -->
-<div class="mt-4 pt-3 border-t border-white/10">
-    <a href="SaveTik.apk" download class="btn-download-apk">
-        <div class="apk-logo">
-    <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="36" height="36" rx="10" fill="url(#gradLogoApk)"/>
-        <text x="18" y="25" text-anchor="middle" fill="white" font-size="20" font-weight="800" font-family="Arial, sans-serif">S</text>
-        <defs>
-            <linearGradient id="gradLogoApk" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#3b82f6"/>
-                <stop stop-color="#1d4ed8"/>
-            </linearGradient>
-        </defs>
-    </svg>
-</div>
-        <div class="apk-content">
-            <span class="apk-text">Download APK</span>
-            <span class="apk-version">v1.0.0</span>
-        </div>
-    </a>
-</div>
-                    
-                </div>
+            <div style="margin-top: 8px; display: flex; flex-wrap: wrap;">
+                <span class="info-tag"><i class="fas fa-check"></i> No Watermark</span>
+                <span class="info-tag"><i class="fas fa-check"></i> HD Quality</span>
+                <span class="info-tag"><i class="fas fa-check"></i> Gratis</span>
+                <span class="info-tag"><i class="fas fa-check"></i> Aman</span>
             </div>
         </div>
         
-        <div class="info-panel-footer">
-            <p>© 2026 SaveTik • Dibuat dengan <i class="fas fa-heart" style="color: #ef4444; font-size: 0.6rem;"></i> oleh Nabil</p>
+        <!-- Developer Info -->
+        <div class="info-section">
+            <div class="info-section-label">Developer</div>
+            <div class="info-card">
+                <div class="info-card-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="info-card-content">
+                    <h4>Nabil Assihidiqi</h4>
+                    <p>Pengembang web & mobile application. Fokus pada pengalaman pengguna yang modern dan intuitif.</p>
+                </div>
+            </div>
+            
+            <div class="info-socials" style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
+                <a href="https://github.com/" target="_blank" class="info-social" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://t.me/NabilOfficialShopp" target="_blank" class="info-social" title="Telegram">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="https://www.instagram.com/abilassidiqi" target="_blank" class="info-social" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@AtrielleMD" target="_blank" class="info-social" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://whatsapp.com/channel/0029VbCUPGD0lwgw3eUmSC2m" target="_blank" class="info-social" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://tiktok.com/@" target="_blank" class="info-social" title="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Tech Stack -->
+        <div class="info-section">
+            <div class="info-section-label">Teknologi</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span class="info-tag"><i class="fab fa-html5"></i> HTML5</span>
+                <span class="info-tag"><i class="fab fa-css3-alt"></i> Tailwind CSS</span>
+                <span class="info-tag"><i class="fab fa-js"></i> JavaScript</span>
+                <span class="info-tag"><i class="fas fa-server"></i> API</span>
+            </div>
+            
+            <!-- Tombol Download APK -->
+            <div class="mt-4 pt-3 border-t border-white/10">
+                <a href="SaveTik.apk" download class="btn-download-apk">
+                    <div class="apk-logo">
+                        <svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="36" height="36" rx="10" fill="url(#gradLogoApk)"/>
+                            <text x="18" y="25" text-anchor="middle" fill="white" font-size="20" font-weight="800" font-family="Arial, sans-serif">S</text>
+                            <defs>
+                                <linearGradient id="gradLogoApk" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#3b82f6"/>
+                                    <stop stop-color="#1d4ed8"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="apk-content">
+                        <span class="apk-text">Install App</span>
+                        <span class="apk-version">v1.0.0</span>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
+    
+    <div class="info-panel-footer">
+        <p>© 2026 SaveTik • Dibuat dengan <i class="fas fa-heart" style="color: #ef4444; font-size: 0.6rem;"></i> oleh Nabil</p>
+    </div>
+</div>
 
     <!-- Admin Trigger -->
     <button id="adminTrigger" class="admin-trigger" title="Admin Panel">
@@ -1280,13 +1313,13 @@
         <!-- Input Section -->
         <div id="inputSection" class="block animate-fade-in">
             <header class="text-center mb-10">
-                <div class="inline-block p-3 rounded-2xl bg-white/5 mb-4 border border-white/10">
+           <div class="mb-4">
                     <div id="headerIcon">
                         <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
                         </svg>
                     </div>
-                </div>
+                 </div>
                 <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-3">
                     <span id="brandTitle" class="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
     SaveTik
@@ -1459,6 +1492,12 @@
                 </a>
                 <a href="https://tiktok.com/@" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
                     <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://www.instagram.com/abilassidiqi" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@AtrielleMD" target="_blank" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
                 </a>
                 <a href="mailto:anakselatan34@gmail.com" aria-label="Email">
                     <i class="fas fa-envelope"></i>
@@ -1866,9 +1905,7 @@
                 btnDownload.classList.add('btn-gradient-ig');
                 mainGlow.style.background = "radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%)";
                 
-                headerIcon.innerHTML = `<i class="fab fa-instagram text-3xl text-pink-500"></i>`;
-                
-                comingSoon.classList.remove('hidden');
+                headerIcon.innerHTML = `<span style="font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 800; color: white;"></span>`;
                 
             } else {
                 tabTik.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg flex items-center justify-center gap-2";
@@ -1883,7 +1920,7 @@
                 btnDownload.classList.add('btn-gradient');
                 mainGlow.style.background = "radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%)";
                 
-                headerIcon.innerHTML = `<svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path></svg>`;
+                headerIcon.innerHTML = `<span style="font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 800; color: white;"></span>`;
                 
                 comingSoon.classList.add('hidden');
             }
