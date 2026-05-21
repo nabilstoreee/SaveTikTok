@@ -90,12 +90,66 @@
             20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
+        @keyframes subtlePulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { border-color: rgba(59, 130, 246, 0.2); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+            50% { border-color: rgba(59, 130, 246, 0.6); box-shadow: 0 0 20px 0 rgba(59, 130, 246, 0.2); }
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0); opacity: 0.5; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
         .animate-fade-in {
             animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .animate-shake {
             animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-border-glow {
+            animation: borderGlow 2s ease-in-out infinite;
+        }
+
+        .animate-slide-in {
+            animation: slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .pulse-once {
+            animation: subtlePulse 0.8s ease-in-out 2;
+        }
+
+        .download-pulse {
+            animation: bounce 0.5s ease-in-out 3;
         }
 
         ::-webkit-scrollbar {
@@ -128,10 +182,23 @@
             height: 40px;
             animation: spin 1s linear infinite;
         }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+
+        /* Modern Loading Bounce */
+        .loading-bounce {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
         }
+        .bounce-dot {
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            animation: bounce 0.6s ease-in-out infinite;
+        }
+        .bounce-dot:nth-child(2) { animation-delay: 0.1s; }
+        .bounce-dot:nth-child(3) { animation-delay: 0.2s; }
 
         .result-card {
             background: rgba(30, 30, 30, 0.5);
@@ -139,8 +206,15 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 24px;
             overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
+        .result-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
         .preview-badge {
             position: absolute;
             bottom: 12px;
@@ -158,6 +232,8 @@
         .download-btn-green {
             background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
         
         .download-btn-green:hover {
@@ -169,12 +245,74 @@
             transform: scale(0.98);
         }
 
+        /* Ripple Effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        .ripple::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s, opacity 0.4s;
+        }
+        .ripple:active::after {
+            width: 200px;
+            height: 200px;
+            opacity: 0;
+        }
+
+        /* Scroll Reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .back-btn {
             transition: all 0.3s ease;
         }
         
         .back-btn:hover {
             color: white;
+        }
+
+        /* Modern Tooltip */
+        .modern-tooltip {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 8px;
+            z-index: 1000;
+            pointer-events: none;
+            white-space: nowrap;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(-100%);
+            transition: opacity 0.2s ease;
+        }
+        .modern-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0.9) transparent transparent transparent;
         }
 
         .coming-soon-overlay {
@@ -189,6 +327,17 @@
             align-items: center;
             justify-content: center;
             z-index: 100;
+        }
+
+        /* Particle Canvas */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
 
         /* Video player styles */
@@ -223,6 +372,10 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .play-btn:hover {
+            transform: scale(1.1);
         }
         
         .video-controls {
@@ -243,6 +396,7 @@
             background: rgba(255,255,255,0.3);
             border-radius: 2px;
             position: relative;
+            cursor: pointer;
         }
         
         .progress-fill {
@@ -251,7 +405,7 @@
             top: 0;
             height: 100%;
             width: 0%;
-            background: white;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
             border-radius: 2px;
         }
         
@@ -264,6 +418,7 @@
             height: 12px;
             background: white;
             border-radius: 50%;
+            box-shadow: 0 0 5px rgba(59,130,246,0.5);
         }
 
         .stats-grid {
@@ -1093,181 +1248,382 @@
             font-weight: 700;
         }
         
-/* Tombol Download APK - CSS ASLI + border & radius seperti SnapTik */
-.btn-download-apk {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    background: rgba(255, 255, 255, 0.03); /* TETAP ASLI */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* border abu-abu tipis terang */
-    border-radius: 12px; /* bentuk seperti SnapTik (kotak membulat) */
-    padding: 12px 16px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    width: 100%;
-    box-sizing: border-box;
-}
+        /* Tombol Download APK - CSS ASLI + border & radius seperti SnapTik */
+        .btn-download-apk {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
 
-.btn-download-apk:hover {
-    background: rgba(255, 255, 255, 0.06); /* TETAP ASLI */
-    border-color: rgba(255, 255, 255, 0.35);
-    transform: translateY(-2px); /* TETAP ASLI */
-}
+        .btn-download-apk:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+        }
 
-.btn-download-apk .apk-logo {
-    flex-shrink: 0;
-}
+        .btn-download-apk .apk-logo {
+            flex-shrink: 0;
+        }
 
-.btn-download-apk .apk-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
+        .btn-download-apk .apk-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
 
-.btn-download-apk .apk-text {
-    font-weight: 700;
-    font-size: 15px;
-    color: white; /* TETAP PUTIH */
-    letter-spacing: 0.3px;
-}
+        .btn-download-apk .apk-text {
+            font-weight: 700;
+            font-size: 15px;
+            color: white;
+            letter-spacing: 0.3px;
+        }
 
-.btn-download-apk .apk-version {
-    font-size: 10px;
-    color: #9ca3af; /* TETAP ASLI */
-    font-weight: 500;
-}
+        .btn-download-apk .apk-version {
+            font-size: 10px;
+            color: #9ca3af;
+            font-weight: 500;
+        }
 
-/* === IKON HEADER S BIRU === */
-#headerIcon {
-    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-    width: 75px;
-    height: 75px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
-}
+        /* === IKON HEADER S BIRU === */
+        #headerIcon {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            width: 75px;
+            height: 75px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+        }
 
-#headerIcon svg {
-    display: none;
-}
+        #headerIcon svg {
+            display: none;
+        }
 
-#headerIcon::before {
-    content: "S";
-    font-family: 'Inter', sans-serif;
-    font-size: 52px;
-    font-weight: 800;
-    color: white;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
+        #headerIcon::before {
+            content: "S";
+            font-family: 'Inter', sans-serif;
+            font-size: 52px;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
 
-/* ===== ADMIN MODAL MODERN ===== */
-.admin-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(12px);
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    visibility: hidden;
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-.admin-modal-overlay.open { visibility: visible; opacity: 1; }
-.admin-modal {
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
-    border-radius: 32px;
-    width: 90%;
-    max-width: 550px;
-    max-height: 85vh;
-    overflow-y: auto;
-    padding: 28px;
-    border: 1px solid rgba(255,255,255,0.15);
-    transform: scale(0.95);
-    transition: transform 0.3s;
-}
-.admin-modal-overlay.open .admin-modal { transform: scale(1); }
-.admin-modal h2 {
-    font-size: 1.8rem;
-    font-weight: 800;
-    text-align: center;
-    margin-bottom: 24px;
-    background: linear-gradient(135deg, #3b82f6, #a855f7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.admin-modal h3 {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #e5e7eb;
-    margin: 20px 0 12px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-.admin-input-group { margin-bottom: 14px; }
-.admin-input-group label {
-    display: block;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: #9ca3af;
-    margin-bottom: 5px;
-    text-transform: uppercase;
-}
-.admin-input-field {
-    width: 100%;
-    background: rgba(10,10,20,0.8);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 14px;
-    padding: 12px 16px;
-    color: white;
-    font-size: 0.85rem;
-}
-.admin-input-field:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
-}
-.admin-textarea { resize: vertical; min-height: 70px; }
-.admin-btn {
-    width: 100%;
-    padding: 14px;
-    border-radius: 16px;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    margin-top: 8px;
-}
-.admin-btn-login { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; }
-.admin-btn-save { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
-.admin-btn-logout {
-    background: rgba(239,68,68,0.2);
-    color: #ef4444;
-    border: 1px solid rgba(239,68,68,0.3);
-    padding: 8px 16px;
-    width: auto;
-}
-.admin-status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 600;
-}
-.admin-status-badge.admin { background: rgba(239,68,68,0.2); color: #ef4444; }
-.section-divider { margin: 16px 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); }
+        /* ===== ADMIN MODAL MODERN ===== */
+        .admin-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .admin-modal-overlay.open { visibility: visible; opacity: 1; }
+        .admin-modal {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 32px;
+            width: 90%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 28px;
+            border: 1px solid rgba(255,255,255,0.15);
+            transform: scale(0.95);
+            transition: transform 0.3s;
+        }
+        .admin-modal-overlay.open .admin-modal { transform: scale(1); }
+        .admin-modal h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #3b82f6, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .admin-modal h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #e5e7eb;
+            margin: 20px 0 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .admin-input-group { margin-bottom: 14px; }
+        .admin-input-group label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #9ca3af;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        .admin-input-field {
+            width: 100%;
+            background: rgba(10,10,20,0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 0.85rem;
+        }
+        .admin-input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+        }
+        .admin-textarea { resize: vertical; min-height: 70px; }
+        .admin-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 16px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+        .admin-btn-login { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; }
+        .admin-btn-save { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+        .admin-btn-logout {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239,68,68,0.3);
+            padding: 8px 16px;
+            width: auto;
+        }
+        .admin-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .admin-status-badge.admin { background: rgba(239,68,68,0.2); color: #ef4444; }
+        .section-divider { margin: 16px 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); }
+        
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f1f1f;
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            z-index: 1000;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            white-space: nowrap;
+        }
+        
+        /* History Panel */
+        .history-panel {
+            position: fixed;
+            bottom: 80px;
+            right: 24px;
+            z-index: 49;
+            width: 340px;
+            max-width: calc(100vw - 48px);
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            overflow: hidden;
+            transform: translateY(20px) scale(0.95);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 25px 80px -20px rgba(0,0,0,0.8);
+        }
+        
+        .history-panel.open {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .history-header {
+            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.05));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .history-header h4 {
+            font-size: 1rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .clear-history-btn {
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: #ef4444;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .clear-history-btn:hover {
+            background: rgba(239,68,68,0.3);
+        }
+        
+        .history-list {
+            max-height: 350px;
+            overflow-y: auto;
+            padding: 8px;
+        }
+        
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 14px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .history-item:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateX(-3px);
+        }
+        
+        .history-thumb {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background: #1a1a1a;
+            object-fit: cover;
+        }
+        
+        .history-info {
+            flex: 1;
+        }
+        
+        .history-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .history-date {
+            font-size: 0.6rem;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        
+        .history-download-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: rgba(34,197,94,0.15);
+            border: 1px solid rgba(34,197,94,0.3);
+            color: #22c55e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .history-download-btn:hover {
+            background: rgba(34,197,94,0.3);
+            transform: scale(1.05);
+        }
+        
+        .delete-history-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.2);
+            color: #ef4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .delete-history-btn:hover {
+            background: rgba(239,68,68,0.25);
+            transform: scale(1.05);
+        }
+        
+        .empty-history {
+            text-align: center;
+            padding: 30px 20px;
+            color: #6b7280;
+            font-size: 0.8rem;
+        }
+        
+        .history-trigger {
+            position: fixed;
+            bottom: 24px;
+            right: 80px;
+            z-index: 50;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #4b5563;
+            font-size: 1rem;
+        }
+        
+        .history-trigger:hover {
+            background: rgba(30, 30, 30, 0.9);
+            color: #3b82f6;
+            transform: scale(1.1);
+        }
         
     </style>
 </head>
 <body class="bg-grid flex items-center justify-center min-h-screen p-4 sm:p-8">
+
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
 
     <!-- Info Trigger Button -->
     <button id="infoTrigger" class="info-trigger pulse" aria-label="Informasi Website">
@@ -1363,6 +1719,22 @@
     </div>
 </div>
 
+    <!-- History Trigger -->
+    <button id="historyTrigger" class="history-trigger" title="History Download">
+        <i class="fas fa-history"></i>
+    </button>
+
+    <!-- History Panel -->
+    <div id="historyPanel" class="history-panel">
+        <div class="history-header">
+            <h4><i class="fas fa-download text-blue-500"></i> Riwayat Download</h4>
+            <button id="clearHistoryBtn" class="clear-history-btn"><i class="fas fa-trash-alt"></i> Hapus Semua</button>
+        </div>
+        <div id="historyList" class="history-list">
+            <div class="empty-history">Belum ada riwayat download</div>
+        </div>
+    </div>
+
     <!-- Admin Trigger -->
     <button id="adminTrigger" class="admin-trigger" title="Admin Panel">
         <i class="fas fa-shield-alt"></i>
@@ -1456,7 +1828,7 @@
         <!-- Input Section -->
         <div id="inputSection" class="block animate-fade-in">
             <header class="text-center mb-10">
-           <div class="mb-4">
+                <div class="mb-4 animate-float">
                     <div id="headerIcon">
                         <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
@@ -1511,8 +1883,12 @@
 
             <!-- Loading -->
             <div id="loading" class="hidden flex flex-col items-center justify-center py-20">
-                <div class="spinner mb-4"></div>
-                <p class="text-gray-400 animate-pulse text-sm font-medium tracking-wide">Sabar Sayang...</p>
+                <div class="loading-bounce">
+                    <div class="bounce-dot"></div>
+                    <div class="bounce-dot"></div>
+                    <div class="bounce-dot"></div>
+                </div>
+                <p class="text-gray-400 mt-4 text-sm font-medium tracking-wide">Memproses video...</p>
             </div>
             
             <!-- Error -->
@@ -1633,7 +2009,7 @@
     <!-- Coming Soon Overlay -->
     <div id="comingSoonOverlay" class="coming-soon-overlay hidden">
         <div class="text-center p-8 max-w-sm">
-            <div class="w-20 h-20 bg-gradient-to-tr from-purple-500 to-pink-500 rounded-3xl mx-auto flex items-center justify-center mb-6 shadow-lg">
+            <div class="w-20 h-20 bg-gradient-to-tr from-purple-500 to-pink-500 rounded-3xl mx-auto flex items-center justify-center mb-6 shadow-lg animate-float">
                 <i class="fab fa-instagram text-4xl text-white"></i>
             </div>
             <h3 class="text-white font-bold text-2xl mb-3">Segera Hadir!</h3>
@@ -1650,10 +2026,12 @@
         let currentMode = 'tiktok';
         let currentData = null;
         let infoPanelOpen = false;
+        // let historyPanelOpen = false; // TIDAK DIGUNAKAN LAGI, menggunakan classList.contains
         let adminPanelOpen = false;
         let isAdmin = false;
         let selectedRating = 0;
         let reviews = [];
+        let downloadHistory = [];
         
         const API_TIKTOK = 'https://www.tikwm.com/api/';
         const ADMIN_USERNAME = 'admin';
@@ -1680,6 +2058,225 @@
                 liked: false
             }
         ];
+
+        // ==================== PARTICLE EFFECT ====================
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let animationId = null;
+            let width, height;
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+            }
+
+            function createParticle() {
+                return {
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 2 + 1,
+                    speedX: (Math.random() - 0.5) * 0.3,
+                    speedY: (Math.random() - 0.5) * 0.3,
+                    opacity: Math.random() * 0.3 + 0.1
+                };
+            }
+
+            function initParticlesArray() {
+                particles = [];
+                const particleCount = Math.min(80, Math.floor(width * height / 15000));
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(createParticle());
+                }
+            }
+
+            function drawParticles() {
+                if (!ctx) return;
+                ctx.clearRect(0, 0, width, height);
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(59, 130, 246, ${p.opacity})`;
+                    ctx.fill();
+                    
+                    p.x += p.speedX;
+                    p.y += p.speedY;
+                    
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+                }
+                animationId = requestAnimationFrame(drawParticles);
+            }
+
+            window.addEventListener('resize', () => {
+                resize();
+                initParticlesArray();
+            });
+            resize();
+            initParticlesArray();
+            drawParticles();
+        }
+
+        // ==================== MODERN TOOLTIP ====================
+        function showModernTooltip(element, text) {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'modern-tooltip';
+            tooltip.textContent = text;
+            const rect = element.getBoundingClientRect();
+            tooltip.style.left = rect.left + rect.width / 2 + 'px';
+            tooltip.style.top = rect.top - 10 + 'px';
+            tooltip.style.transform = 'translateX(-50%) translateY(-100%)';
+            document.body.appendChild(tooltip);
+            setTimeout(() => {
+                tooltip.style.opacity = '0';
+                setTimeout(() => tooltip.remove(), 200);
+            }, 1500);
+        }
+        
+        // ==================== HISTORY DOWNLOAD (DIPERBAIKI) ====================
+        function loadHistory() {
+            const saved = localStorage.getItem('savetik_history');
+            if (saved) downloadHistory = JSON.parse(saved);
+            else downloadHistory = [];
+            renderHistory();
+        }
+
+        function saveHistory() {
+            localStorage.setItem('savetik_history', JSON.stringify(downloadHistory));
+        }
+
+        function addToHistory(videoData) {
+            const historyItem = {
+                id: Date.now(),
+                title: videoData.title || 'Video TikTok',
+                videoUrl: videoData.play,
+                cover: videoData.cover || videoData.origin_cover,
+                author: videoData.author?.unique_id || '',
+                date: new Date().toLocaleString('id-ID')
+            };
+            downloadHistory.unshift(historyItem);
+            if (downloadHistory.length > 50) downloadHistory = downloadHistory.slice(0, 50);
+            saveHistory();
+            renderHistory();
+        }
+
+        function clearAllHistory() {
+            if (confirm('Hapus semua riwayat download?')) {
+                downloadHistory = [];
+                saveHistory();
+                renderHistory();
+                showToast('Semua riwayat dihapus', 'success');
+            }
+        }
+
+        // RENDER HISTORY - TANPA ONCLICK INLINE
+        function renderHistory() {
+            const container = document.getElementById('historyList');
+            if (!container) return;
+            
+            if (!downloadHistory.length) {
+                container.innerHTML = '<div class="empty-history"><i class="fas fa-inbox mb-2 text-2xl"></i><br>Belum ada riwayat download</div>';
+                return;
+            }
+            
+            container.innerHTML = downloadHistory.map(item => `
+                <div class="history-item" data-id="${item.id}">
+                    <img src="${item.cover}" class="history-thumb" onerror="this.src='https://via.placeholder.com/45?text=No+Image'">
+                    <div class="history-info">
+                        <div class="history-title">${escapeHtml(item.title.substring(0, 50))}${item.title.length > 50 ? '...' : ''}</div>
+                        <div class="history-date"><i class="far fa-clock"></i> ${item.date}</div>
+                    </div>
+                    <button class="history-download-btn" data-url="${item.videoUrl}" data-title="${escapeHtml(item.title)}" title="Download ulang"><i class="fas fa-download"></i></button>
+                    <button class="delete-history-btn" data-id="${item.id}" title="Hapus"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            `).join('');
+            
+            attachHistoryEvents();
+        }
+        
+        // ATTACH EVENT LISTENER UNTUK TOMBOL DI DALAM HISTORY
+        function attachHistoryEvents() {
+            // Tombol download ulang
+            document.querySelectorAll('.history-download-btn').forEach(btn => {
+                btn.onclick = function(e) {
+                    e.stopPropagation();
+                    const url = this.dataset.url;
+                    const title = this.dataset.title;
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `${title}.mp4`;
+                    link.click();
+                    showToast('Download dimulai!', 'success');
+                };
+            });
+            
+            // Tombol hapus item
+            document.querySelectorAll('.delete-history-btn').forEach(btn => {
+                btn.onclick = function(e) {
+                    e.stopPropagation();
+                    const id = parseInt(this.dataset.id);
+                    if (confirm('Hapus riwayat ini?')) {
+                        downloadHistory = downloadHistory.filter(item => item.id !== id);
+                        saveHistory();
+                        renderHistory();
+                        showToast('Riwayat dihapus', 'success');
+                    }
+                };
+            });
+        }
+
+        // TOGGLE HISTORY PANEL - DIPERBAIKI
+        function toggleHistoryPanel() {
+            const panel = document.getElementById('historyPanel');
+            const trigger = document.getElementById('historyTrigger');
+            
+            // Efek animasi klik
+            if (trigger) {
+                trigger.style.transform = 'scale(0.95)';
+                setTimeout(() => { if (trigger) trigger.style.transform = ''; }, 150);
+            }
+            
+            if (!panel) return;
+            
+            // Cek apakah panel sedang terbuka
+            const isOpen = panel.classList.contains('open');
+            
+            if (isOpen) {
+                panel.classList.remove('open');
+            } else {
+                panel.classList.add('open');
+                renderHistory(); // Refresh data
+            }
+        }
+
+        // ==================== SCROLL REVEAL ====================
+        function observeScrollReveal() {
+            const elements = document.querySelectorAll('.scroll-reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            elements.forEach(el => observer.observe(el));
+        }
+
+        // ==================== RIPPLE EFFECT ====================
+        function addRippleEffect() {
+            const buttons = document.querySelectorAll('button:not(.no-ripple)');
+            buttons.forEach(btn => {
+                btn.classList.add('ripple');
+            });
+        }
 
         // ==================== ADMIN EDIT ALL TEXT ====================
         function loadAdminSettings() {
@@ -2050,28 +2647,30 @@
             div.textContent = text;
             return div.innerHTML;
         }
+        
+        // Loading Bar
+        function showLoadingBar() {
+            const bar = document.getElementById('topLoadingBar');
+            bar.style.display = 'block';
+            bar.style.width = '0%';
+            setTimeout(() => { bar.style.width = '30%'; }, 10);
+        }
+        
+        function completeLoadingBar() {
+            const bar = document.getElementById('topLoadingBar');
+            bar.style.width = '100%';
+            setTimeout(() => { bar.style.display = 'none'; bar.style.width = '0%'; }, 500);
+        }
 
         function showToast(message, type = 'success') {
             const existing = document.querySelector('.toast-notification');
             if (existing) existing.remove();
-            const colors = { success: '#22c55e', error: '#ef4444', warning: '#f59e0b' };
-            const icons = { success: 'fa-check-circle', error: 'fa-times-circle', warning: 'fa-exclamation-circle' };
             const toast = document.createElement('div');
             toast.className = 'toast-notification';
-            toast.style.cssText = `
-                position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
-                background: ${colors[type] || colors.warning}; color: white; font-weight: 700; font-size: 0.85rem;
-                padding: 14px 24px; border-radius: 16px; z-index: 200; opacity: 0;
-                transition: all 0.4s; display: flex; align-items: center; gap: 10px; white-space: nowrap;
-            `;
-            toast.innerHTML = `<i class="fas ${icons[type] || icons.warning}"></i> ${message}`;
+            const icons = { success: 'fa-check-circle', error: 'fa-times-circle', warning: 'fa-exclamation-circle' };
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.success}" style="margin-right: 8px;"></i>${message}`;
             document.body.appendChild(toast);
-            requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(-50%) translateY(20px)';
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
+            setTimeout(() => toast.remove(), 3000);
         }
 
         function switchTab(mode) {
@@ -2221,6 +2820,7 @@
                     throw new Error('Gagal mengambil data video. Coba link lain.');
                 }
                 currentData = data.data;
+                addToHistory(currentData);
                 showResult(currentData);
             } catch (error) {
                 showError(error.message || 'Terjadi kesalahan. Coba lagi nanti.');
@@ -2255,7 +2855,7 @@
             const secs = duration % 60;
             const durationStr = `${mins}:${secs.toString().padStart(2, '0')}`;
             content.innerHTML = `
-                <div class="result-card">
+                <div class="result-card scroll-reveal">
                     <div class="video-container relative aspect-video bg-black">
                         <video id="previewVideo" src="${play}" poster="${cover}" class="w-full h-full object-cover" preload="metadata"></video>
                         <div id="videoOverlay" class="video-overlay" style="opacity: 1;">
@@ -2286,7 +2886,7 @@
                         </div>
                     </div>
                     <div class="px-5 pb-5 space-y-3">
-                        <a href="${play}" target="_blank" download class="block w-full download-btn-green text-white font-extrabold text-base py-4 rounded-2xl text-center flex items-center justify-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg> Download No Watermark</a>
+                        <a href="${play}" target="_blank" download class="block w-full download-btn-green text-white font-extrabold text-base py-4 rounded-2xl text-center flex items-center justify-center gap-2 download-pulse"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg> Download No Watermark</a>
                         <a href="${wmplay}" target="_blank" download class="block w-full bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 font-bold text-sm py-3.5 rounded-2xl text-center transition-all">Download With Watermark</a>
                         ${music ? `<a href="${music}" target="_blank" download class="block w-full bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 font-bold text-sm py-3.5 rounded-2xl text-center transition-all flex items-center justify-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg> Download Audio</a>` : ''}
                     </div>
@@ -2300,14 +2900,16 @@
                     copyCaptionBtn.onclick = () => {
                         const caption = document.querySelector('.result-card h3')?.innerText || '';
                         if (navigator.clipboard) {
-                            navigator.clipboard.writeText(caption).catch(() => {
+                            navigator.clipboard.writeText(caption).then(() => {
+                                showModernTooltip(copyCaptionBtn, 'Caption disalin!');
+                            }).catch(() => {
                                 const textarea = document.createElement('textarea');
                                 textarea.value = caption;
                                 document.body.appendChild(textarea);
                                 textarea.select();
                                 document.execCommand('copy');
                                 document.body.removeChild(textarea);
-                                showToast('Caption berhasil disalin!', 'success');
+                                showModernTooltip(copyCaptionBtn, 'Caption disalin!');
                             });
                         } else {
                             const textarea = document.createElement('textarea');
@@ -2316,7 +2918,7 @@
                             textarea.select();
                             document.execCommand('copy');
                             document.body.removeChild(textarea);
-                            showToast('Caption berhasil disalin!', 'success');
+                            showModernTooltip(copyCaptionBtn, 'Caption disalin!');
                         }
                     };
                 }
@@ -2324,10 +2926,24 @@
                     if (navigator.share) {
                         shareBtn.onclick = () => { navigator.share({ title: title, url: play }).catch(() => {}); };
                     } else {
-                        shareBtn.onclick = () => { navigator.clipboard.writeText(play); showToast('Link video disalin!', 'success'); };
+                        shareBtn.onclick = () => { navigator.clipboard.writeText(play); showModernTooltip(shareBtn, 'Link video disalin!'); };
                     }
                 }
+                // Scroll reveal for result card
+                const resultCard = document.querySelector('.result-card');
+                if (resultCard) {
+                    resultCard.classList.add('revealed');
+                }
+                // Pulse animation on download button
+                const downloadBtn = document.querySelector('.download-pulse');
+                if (downloadBtn) {
+                    setTimeout(() => {
+                        downloadBtn.classList.remove('download-pulse');
+                    }, 1500);
+                }
             }, 100);
+            // Observe new elements
+            observeScrollReveal();
         }
         
         function setupVideoPlayer() {
@@ -2338,6 +2954,7 @@
             const progressFill = document.getElementById('progressFill');
             const progressKnob = document.getElementById('progressKnob');
             const timeDisplay = document.getElementById('timeDisplay');
+            const progressBar = document.querySelector('.progress-bar');
             if (!video) return;
             video.addEventListener('timeupdate', () => {
                 const progress = (video.currentTime / video.duration) * 100;
@@ -2364,6 +2981,13 @@
                 if (pauseIcon) pauseIcon.classList.add('hidden');
                 if (overlay) overlay.style.opacity = '1';
             });
+            if (progressBar) {
+                progressBar.addEventListener('click', (e) => {
+                    const rect = progressBar.getBoundingClientRect();
+                    const pos = (e.clientX - rect.left) / rect.width;
+                    video.currentTime = pos * video.duration;
+                });
+            }
         }
 
         function toggleVideo() {
@@ -2372,10 +2996,15 @@
             if (video.paused) video.play();
             else video.pause();
         }
+        
 
         document.addEventListener('DOMContentLoaded', function() {
+            initParticles();
+            addRippleEffect();
             applyAdminSettings();
             initReviews();
+            loadHistory(); // LOAD HISTORY
+            observeScrollReveal();
             const footerYear = document.querySelector('footer p');
             if (footerYear) {
                 footerYear.innerHTML = footerYear.innerHTML.replace('2026', new Date().getFullYear());
@@ -2387,6 +3016,8 @@
             document.getElementById('ratingToggleBtn').onclick = toggleRatingSection;
             document.getElementById('infoTrigger').onclick = toggleInfoPanel;
             document.getElementById('adminTrigger').onclick = () => openAdminModalModern();
+            document.getElementById('historyTrigger').onclick = toggleHistoryPanel;
+            document.getElementById('clearHistoryBtn').onclick = clearAllHistory;
             document.getElementById('backToTikTokBtn').onclick = () => switchTab('tiktok');
             document.getElementById('adminLoginBtnModern').onclick = loginAdminModern;
             document.getElementById('adminLogoutBtn').onclick = logoutAdminModern;
@@ -2400,6 +3031,28 @@
             });
             document.getElementById('urlInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') handleDownload(); });
             document.getElementById('adminPass').addEventListener('keypress', function(e) { if (e.key === 'Enter') loginAdmin(); });
+            
+            // ========== CLOSE HISTORY PANEL WHEN CLICKING OUTSIDE (DIPERBAIKI - TIDAK MENGGANGGU TOMBOL) ==========
+            document.addEventListener('click', function(e) {
+                const historyPanel = document.getElementById('historyPanel');
+                const historyTrigger = document.getElementById('historyTrigger');
+                
+                if (!historyPanel) return;
+                
+                // Cek apakah panel sedang terbuka
+                const isPanelOpen = historyPanel.classList.contains('open');
+                
+                if (isPanelOpen) {
+                    // Cek apakah klik di luar panel DAN di luar tombol trigger
+                    const isClickInsidePanel = historyPanel.contains(e.target);
+                    const isClickOnTrigger = historyTrigger && historyTrigger.contains(e.target);
+                    
+                    // Jika klik di luar panel dan bukan pada tombol trigger, tutup panel
+                    if (!isClickInsidePanel && !isClickOnTrigger) {
+                        historyPanel.classList.remove('open');
+                    }
+                }
+            });
         });
         
     </script>
