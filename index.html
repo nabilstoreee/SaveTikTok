@@ -1618,6 +1618,16 @@
             transform: scale(1.1);
         }
         
+        .btn-red {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-red:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.5);
+}
+        
     </style>
 </head>
 <body class="bg-grid flex items-center justify-center min-h-screen p-4 sm:p-8">
@@ -1815,13 +1825,16 @@
 
     <div class="max-w-2xl w-full glass p-6 sm:p-10 rounded-[2.5rem] relative overflow-hidden">
         
-        <!-- Platform Switcher -->
-        <div class="flex p-1 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 mb-8 max-w-[320px] mx-auto relative z-20">
-            <button id="tab-tiktok" class="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg flex items-center justify-center gap-2">
-                <i class="fab fa-tiktok"></i>TikTok
-            </button>
-            <button id="tab-instagram" class="flex-1 py-2.5 rounded-xl text-sm font-bold text-gray-400 hover:text-white transition-all flex items-center justify-center gap-2">
-                <i class="fab fa-instagram"></i>Instagram
+        <!-- Platform Switcher dengan tambahan YouTube -->
+        <div class="flex p-1 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 mb-8 max-w-[480px] mx-auto relative z-20">
+        <button id="tab-tiktok" class="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg flex items-center justify-center gap-2">
+            <i class="fab fa-tiktok"></i>TikTok
+        </button>
+        <button id="tab-instagram" class="flex-1 py-2.5 rounded-xl text-sm font-bold text-gray-400 hover:text-white transition-all flex items-center justify-center gap-2">
+            <i class="fab fa-instagram"></i>Instagram
+        </button>
+        <button id="tab-youtube" class="flex-1 py-2.5 rounded-xl text-sm font-bold text-gray-400 hover:text-white transition-all flex items-center justify-center gap-2">
+        <i class="fab fa-youtube"></i>YouTube
             </button>
         </div>
 
@@ -1843,18 +1856,18 @@
                 <p id="brandDesc" class="text-gray-400 font-medium tracking-wide">Fast, Secure, & No Watermark</p>
             </header>
                 
-<div class="space-y-4 relative z-10">
-    <div class="relative group">
-        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <i id="inputIcon" class="fab fa-tiktok text-lg text-gray-500 group-focus-within:text-blue-500 transition-colors"></i>
+        <div class="space-y-4 relative z-10">
+            <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i id="inputIcon" class="fab fa-tiktok text-lg text-gray-500 group-focus-within:text-blue-500 transition-colors"></i>
         </div>
-        <input type="text" id="urlInput" placeholder="Tempel tautan video disini..." class="w-full pl-12 pr-28 py-5 rounded-2xl bg-[#161616] border border-white/10 focus:border-blue-500/50 focus:outline-none transition-all text-white placeholder-gray-600 text-sm">
+                    <input type="text" id="urlInput" placeholder="Tempel tautan video disini..." class="w-full pl-12 pr-28 py-5 rounded-2xl bg-[#161616] border border-white/10 focus:border-blue-500/50 focus:outline-none transition-all text-white placeholder-gray-600 text-sm">
         
         <!-- Tombol Tempel -->
         <button id="pasteBtn" class="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-500/20 to-blue-600/20 hover:from-blue-500/30 hover:to-blue-600/30 border border-blue-500/40 text-blue-400 text-sm font-medium transition-all flex items-center gap-2 backdrop-blur-sm">
-            <i class="fas fa-paste"></i> Tempel
-        </button>
-    </div>
+                    <i class="fas fa-paste"></i> Tempel
+            </button>
+        </div>
  
     <button id="btnDownload" class="w-full btn-gradient text-white font-extrabold text-lg py-5 rounded-2xl flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all">
         <span id="btnText">Download Video</span>
@@ -1912,7 +1925,7 @@
           <div class="w-full border-t border-white/10"></div>
         </div>
           <div class="relative flex justify-center text-sm">
-        <span class="px-3 bg-transparent text-gray-500 text-xs">SaveTik</span>
+        <span class="px-3 bg-transparent text-gray-500 text-xs"></span>
         </div>
     </div>
 
@@ -2676,6 +2689,7 @@
         function switchTab(mode) {
             currentMode = mode;
             const tabTik = document.getElementById('tab-tiktok');
+            const tabYt = document.getElementById('tab-youtube');
             const tabIg = document.getElementById('tab-instagram');
             const brandTitle = document.getElementById('brandTitle');
             const brandDesc = document.getElementById('brandDesc');
@@ -2685,32 +2699,55 @@
             const mainGlow = document.getElementById('mainGlow');
             const headerIcon = document.getElementById('headerIcon');
             const comingSoon = document.getElementById('comingSoonOverlay');
-            urlInput.value = '';
-            clearError();
-            backToHome();
-            if (mode === 'instagram') {
-                tabIg.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg flex items-center justify-center gap-2";
-                tabTik.className = "flex-1 py-2.5 rounded-xl text-sm font-bold text-gray-400 hover:text-white transition-all flex items-center justify-center gap-2";
-                brandTitle.innerText = "SaveGram";
-                brandDesc.innerText = "Download Reels & Photo Instagram";
-                inputIcon.className = "fab fa-instagram text-lg text-gray-500 group-focus-within:text-purple-500 transition-colors";
-                urlInput.placeholder = "Tempel tautan video disini...";
-                btnDownload.classList.remove('btn-gradient');
-                btnDownload.classList.add('btn-gradient-ig');
-                mainGlow.style.background = "radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%)";
-                headerIcon.innerHTML = `<span style="font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 800; color: white;"></span>`;
-            } else {
-                tabTik.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg flex items-center justify-center gap-2";
-                tabIg.className = "flex-1 py-2.5 rounded-xl text-sm font-bold text-gray-400 hover:text-white transition-all flex items-center justify-center gap-2";
-                brandTitle.innerText = "SaveTik";
-                brandDesc.innerText = "Fast, Secure, & No Watermark";
-                inputIcon.className = "fab fa-tiktok text-lg text-gray-500 group-focus-within:text-blue-500 transition-colors";
-                urlInput.placeholder = "Tempel tautan video disini...";
-                btnDownload.classList.remove('btn-gradient-ig');
-                btnDownload.classList.add('btn-gradient');
-                mainGlow.style.background = "radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%)";
-                headerIcon.innerHTML = `<span style="font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 800; color: white;"></span>`;
-                comingSoon.classList.add('hidden');
+    
+        urlInput.value = '';
+        clearError();
+        backToHome();
+    
+        // RESET semua tab ke warna abu-abu (tidak aktif) DULU
+            tabTik.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-gray-400 hover:text-white hover:bg-white/10 flex items-center justify-center gap-2";
+            tabIg.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-gray-400 hover:text-white hover:bg-white/10 flex items-center justify-center gap-2";
+            tabYt.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-gray-400 hover:text-white hover:bg-white/10 flex items-center justify-center gap-2";
+    
+        // BARU SET yang aktif sesuai mode
+        if (mode === 'youtube') {
+        // RESET semua tab ke warna abu-abu (tidak aktif) DULU
+            tabTik.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-gray-400 hover:text-white hover:bg-white/10 flex items-center justify-center gap-2";
+            tabIg.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-gray-400 hover:text-white hover:bg-white/10 flex items-center justify-center gap-2";
+            tabYt.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-gray-400 hover:text-white hover:bg-white/10 flex items-center justify-center gap-2";
+    
+        // BARU SET yang aktif (warna merah)
+            tabYt.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-red-500 to-red-700 text-white shadow-lg flex items-center justify-center gap-2";
+            brandTitle.innerText = "SaveTube";
+            brandDesc.innerText = "Download Video YouTube HD";
+            inputIcon.className = "fab fa-youtube text-lg text-gray-500 group-focus-within:text-red-500 transition-colors";
+            urlInput.placeholder = "Tempel tautan YouTube disini...";
+            btnDownload.classList.remove('btn-gradient', 'btn-gradient-ig');
+            btnDownload.classList.add('btn-red');
+            mainGlow.style.background = "radial-gradient(circle, rgba(239, 68, 68, 0.2) 0%, transparent 70%)";
+        }
+        else if (mode === 'instagram') {
+            tabIg.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg flex items-center justify-center gap-2";
+            brandTitle.innerText = "SaveGram";
+            brandDesc.innerText = "Download Reels & Photo Instagram";
+            inputIcon.className = "fab fa-instagram text-lg text-gray-500 group-focus-within:text-purple-500 transition-colors";
+            urlInput.placeholder = "Tempel tautan Instagram disini...";
+            btnDownload.classList.remove('btn-gradient');
+            btnDownload.classList.add('btn-gradient-ig');
+            mainGlow.style.background = "radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%)";
+            headerIcon.innerHTML = `<span style="font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 800; color: white;"></span>`;
+        } 
+        else {
+            tabTik.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg flex items-center justify-center gap-2";
+            brandTitle.innerText = "SaveTik";
+            brandDesc.innerText = "Fast, Secure, & No Watermark";
+            inputIcon.className = "fab fa-tiktok text-lg text-gray-500 group-focus-within:text-blue-500 transition-colors";
+            urlInput.placeholder = "Tempel tautan TikTok disini...";
+            btnDownload.classList.remove('btn-gradient-ig');
+            btnDownload.classList.add('btn-gradient');
+            mainGlow.style.background = "radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%)";
+            headerIcon.innerHTML = `<span style="font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 800; color: white;"></span>`;
+            comingSoon.classList.add('hidden');
             }
         }
 
@@ -2732,15 +2769,51 @@
         }
 
         async function handleDownload() {
-            if (currentMode === 'instagram') {
-                showComingSoon();
-                return;
-            }
+            const url = document.getElementById('urlInput').value.trim();
+    
+        if (!url) {
+            showError('Masukkan link dulu!');
+            return;
+        }
+    
+        // CEK UNTUK YOUTUBE
+        if (currentMode === 'youtube') {
+        if (url.includes('youtube.com') || url.includes('youtu.be')) {
+            showComingSoon('youtube');
+        } else {
+            showError(' Link tidak valid! Masukkan link YouTube yang benar.');
+        }
+            return;
+        }
+    
+        // CEK UNTUK INSTAGRAM
+        if (currentMode === 'instagram') {
+            showComingSoon('instagram');
+            return;
+        }
+    
+        // UNTUK TIKTOK
             await downloadTikTok();
         }
 
-        function showComingSoon() {
+        function showComingSoon(platform) {
             const comingSoon = document.getElementById('comingSoonOverlay');
+            const iconDiv = comingSoon.querySelector('.w-20');
+            const titleH3 = comingSoon.querySelector('h3');
+            const messageP = comingSoon.querySelector('p');
+    
+        if (platform === 'youtube') {
+            iconDiv.className = "w-20 h-20 bg-gradient-to-tr from-red-500 to-red-700 rounded-3xl mx-auto flex items-center justify-center mb-6 shadow-lg animate-float";
+            iconDiv.innerHTML = '<i class="fab fa-youtube text-4xl text-white"></i>';
+            titleH3.innerText = "YouTube";
+            messageP.innerHTML = 'Maaf, fitur download YouTube saat ini belum tersedia. Akan segera hadir nanti! 🚀';
+        } else {
+            iconDiv.className = "w-20 h-20 bg-gradient-to-tr from-purple-500 to-pink-500 rounded-3xl mx-auto flex items-center justify-center mb-6 shadow-lg animate-float";
+            iconDiv.innerHTML = '<i class="fab fa-instagram text-4xl text-white"></i>';
+            titleH3.innerText = "Instagram";
+            messageP.innerHTML = 'Maaf, fitur download Instagram saat ini belum tersedia. Akan segera hadir nanti! 🚀';
+        }
+    
             comingSoon.classList.remove('hidden');
         }
 
@@ -3010,6 +3083,7 @@
                 footerYear.innerHTML = footerYear.innerHTML.replace('2026', new Date().getFullYear());
             }
             document.getElementById('tab-tiktok').onclick = () => switchTab('tiktok');
+            document.getElementById('tab-youtube').onclick = () => switchTab('youtube');
             document.getElementById('tab-instagram').onclick = () => switchTab('instagram');
             document.getElementById('btnDownload').onclick = handleDownload;
             document.getElementById('backToHomeBtn').onclick = backToHome;
